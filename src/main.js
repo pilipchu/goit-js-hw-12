@@ -53,10 +53,14 @@ async function onFormSubmit(event){
 
 // запит для загрузки більше данних з сервера
 async function onLoadMoreClick() {
- page +=1
-    const data = await getImages(image, page) 
+    try {
+        page += 1
+        const data = await getImages(image, page) 
 
     refs.list.insertAdjacentHTML('beforeend', renderImages(data.hits))
+    }catch (err) {
+        console.log(err)
+    }
     checkBtnStatus()
 }
 
