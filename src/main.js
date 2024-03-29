@@ -5,6 +5,7 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 
 import { getImages } from "./js/pixebay-api";
 import { renderImages } from "./js/render-functions";
+import { checkData } from "./js/render-functions";
 
 
 export let image
@@ -31,22 +32,24 @@ async function onFormSubmit(event){
     page = 1
     image = event.target.elements.search.value.trim()
     refs.list.innerHTML = ''
-    if (!image) {
+    if (!image && checkData) {
         iziToast.info({
             message: "Line is empty, enter a value",
             position: "topLeft"
         })
+        refs.list.innerHTML = ''
         return
     }
     try {
          const data = await getImages(image, page) 
    maxPage = Math.ceil(data.totalHits / perSize) 
-    refs.list.insertAdjacentHTML('beforeend', renderImages(data.hits))
+        refs.list.insertAdjacentHTML('beforeend', renderImages(data.hits))
+        lightbox.refresh()
+        checkBtnStatus()
     } catch (err) {
         console.log(err)
     }
-    checkBtnStatus()
-        
+    
     event.target.reset()
 }
 
@@ -57,7 +60,8 @@ async function onLoadMoreClick() {
         page += 1
         const data = await getImages(image, page) 
 
-    refs.list.insertAdjacentHTML('beforeend', renderImages(data.hits))
+        refs.list.insertAdjacentHTML('beforeend', renderImages(data.hits))
+        lightbox.refresh()
     }catch (err) {
         console.log(err)
     }
@@ -88,6 +92,6 @@ export function hideLoadMore() {
 
 export const lightbox = new SimpleLightbox('.gallery-link', { 
     captionsData: 'alt',
-  captionDelay: 250,
+    captionDelay: 250,
     overlayOpacity: 0.8,
  })

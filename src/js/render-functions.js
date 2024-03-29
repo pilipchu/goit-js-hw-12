@@ -2,6 +2,8 @@ import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 import { refs } from "../main";
 import { lightbox } from "../main";
+
+export let checkData = true
 // повний рендер галереї
 export function renderImages(obj) { 
     if (obj.length === 0) {
@@ -9,8 +11,7 @@ export function renderImages(obj) {
             message: "Sorry, there are no images matching your search query. Please try again!",
             position: "topRight",
         })
-        refs.list.innerHTML = ''
-        return
+        return catchData = false 
     }
 const markup = obj.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) =>
      `
@@ -26,6 +27,5 @@ const markup = obj.map(({ webformatURL, largeImageURL, tags, likes, views, comme
     </div>
     </li>
     `).join('')
-    lightbox.refresh();
     return markup
     }
