@@ -77,6 +77,7 @@ function checkBtnStatus() {
         })
     } else {
         showLoadMore()
+    
     }
 }
 
