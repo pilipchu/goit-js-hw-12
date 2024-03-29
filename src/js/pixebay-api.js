@@ -13,7 +13,7 @@ export async function getImages(image, currentPage) {
         safesearch: true,
         lang: 'en',
         page: currentPage,
-        per_page: 24
+        per_page: 15
     }
 
     const res = await axios.get(url, { params })

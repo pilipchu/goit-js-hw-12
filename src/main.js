@@ -6,12 +6,13 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 import { getImages } from "./js/pixebay-api";
 import { renderImages } from "./js/render-functions";
 import { checkData } from "./js/render-functions";
+import { Console } from "console";
 
 
 export let image
 let page = 1
 let maxPage = 0
-const perSize = 24
+const perSize = 15
 
 export const refs = {
     formElem: document.querySelector('form'),
@@ -73,6 +74,7 @@ async function onLoadMoreClick() {
     }catch (err) {
         console.log(err)
     }
+    myScroll()
     checkBtnStatus()
 }
 
@@ -115,6 +117,14 @@ function hiddenLoadBtn(){
     refs.loadIconMore.classList.add('hidden')
 }
 
+function myScroll(){
+    const height = refs.list.firstChild.getBoundingClientRect().height
+    console.log(height)
+scrollBy({
+    top: height*2,
+    behavior: 'smooth'
+})
+}
 export const lightbox = new SimpleLightbox('.gallery-link', { 
     captionsData: 'alt',
     captionDelay: 250,
