@@ -28,6 +28,7 @@ const markup = obj.map(({ webformatURL, largeImageURL, tags, likes, views, comme
     </div>
     </li>
     `).join('')
+        
     return markup
     }
 }
