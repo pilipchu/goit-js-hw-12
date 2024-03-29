@@ -6,7 +6,7 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 import { getImages } from "./js/pixebay-api";
 import { renderImages } from "./js/render-functions";
 import { checkData } from "./js/render-functions";
-import { Console } from "console";
+
 
 
 export let image
@@ -118,12 +118,12 @@ function hiddenLoadBtn(){
 }
 
 function myScroll(){
-    const height = refs.list.firstChild.getBoundingClientRect().height
-    console.log(height)
-scrollBy({
-    top: height*2,
-    behavior: 'smooth'
-})
+    const height = refs.list.firstChild.getBoundingClientRect().height;
+
+    window.scrollBy({
+        top: height*2,
+        behavior: 'smooth',
+      });
 }
 export const lightbox = new SimpleLightbox('.gallery-link', { 
     captionsData: 'alt',
