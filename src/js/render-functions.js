@@ -2,7 +2,6 @@ import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 import { hideLoadMore } from "../main";
 import { refs } from "../main";
-import { image } from "../main";
 
 // повний рендер галереї
 export function renderImages(obj) { 
@@ -12,7 +11,6 @@ export function renderImages(obj) {
             message: "Sorry, there are no images matching your search query. Please try again!",
             position: "topRight",
         })
-        return image = ''
     }else{
 const markup = obj.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) =>
      `
