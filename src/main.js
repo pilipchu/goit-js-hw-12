@@ -30,19 +30,23 @@ async function onFormSubmit(event){
     hideLoadMore()
     page = 1
     image = event.target.elements.search.value.trim()
-    if (image) {
     refs.list.innerHTML = ''
-        const data = await getImages(image, page) 
-   maxPage = Math.ceil(data.total / perSize) 
-    refs.list.insertAdjacentHTML('beforeend', renderImages(data.hits))
-    checkBtnStatus()
-    } else {
-        refs.list.innerHTML = '' 
+    if (!image) {
         iziToast.info({
-        message: "Line is empty, enter a value",
-        position: "topLeft"
-    })
-}
+            message: "Line is empty, enter a value",
+            position: "topLeft"
+        })
+        return
+    }
+    try {
+         const data = await getImages(image, page) 
+   maxPage = Math.ceil(data.totalHits / perSize) 
+    refs.list.insertAdjacentHTML('beforeend', renderImages(data.hits))
+    } catch (err) {
+        console.log(err)
+    }
+    checkBtnStatus()
+        
     event.target.reset()
 }
 
@@ -59,6 +63,10 @@ async function onLoadMoreClick() {
 function checkBtnStatus() {
     if (page >= maxPage) {
         hideLoadMore()
+        iziToast.info({
+            message: "We're sorry, but you've reached the end of search results.",
+            position: "topRight",
+        })
     } else {
         showLoadMore()
     }
@@ -72,3 +80,10 @@ function showLoadMore() {
 export function hideLoadMore() {
     refs.btnLoad.classList.add('hidden')
 }
+
+
+export const lightbox = new SimpleLightbox('.gallery-link', { 
+    captionsData: 'alt',
+  captionDelay: 250,
+    overlayOpacity: 0.8,
+ })

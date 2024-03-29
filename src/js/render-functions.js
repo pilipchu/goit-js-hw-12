@@ -1,17 +1,17 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
-import { hideLoadMore } from "../main";
 import { refs } from "../main";
-
+import { lightbox } from "../main";
 // повний рендер галереї
 export function renderImages(obj) { 
     if (obj.length === 0) {
-        refs.list.innerHTML = ''
         iziToast.error({
             message: "Sorry, there are no images matching your search query. Please try again!",
             position: "topRight",
         })
-    }else{
+        refs.list.innerHTML = ''
+        return
+    }
 const markup = obj.map(({ webformatURL, largeImageURL, tags, likes, views, comments, downloads }) =>
      `
     <li class="gallery-item">
@@ -26,7 +26,6 @@ const markup = obj.map(({ webformatURL, largeImageURL, tags, likes, views, comme
     </div>
     </li>
     `).join('')
-        
+        lightbox.refresh();
     return markup
     }
-}
