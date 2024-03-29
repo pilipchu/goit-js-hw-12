@@ -1,12 +1,12 @@
 import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
-import { refs } from "../main";
-import { lightbox } from "../main";
+import { hideLoadIcon } from "../main";
 
 export let checkData = true
 // повний рендер галереї
 export function renderImages(obj) { 
     if (obj.length === 0) {
+        hideLoadIcon()
         iziToast.error({
             message: "Sorry, there are no images matching your search query. Please try again!",
             position: "topRight",

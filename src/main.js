@@ -17,7 +17,9 @@ export const refs = {
     formElem: document.querySelector('form'),
     list: document.querySelector('.gallery-image'),
     loadItem: document.querySelector('.loader-cont'),
-    btnLoad: document.querySelector('.btn-primary')
+    btnLoad: document.querySelector('.btn-primary'),
+    loadIcon: document.querySelector('.content-loader'),
+    loadIconMore: document.querySelector('.loader')
 }
 
 
@@ -26,6 +28,7 @@ refs.formElem.addEventListener('submit', onFormSubmit)
 
 refs.btnLoad.addEventListener('click', onLoadMoreClick)
 
+// івент по запиту на сервер
 async function onFormSubmit(event){
     event.preventDefault()
     hideLoadMore()
@@ -33,6 +36,7 @@ async function onFormSubmit(event){
     image = event.target.elements.search.value.trim()
     refs.list.innerHTML = ''
     if (!image && checkData) {
+        hideLoadIcon()
         iziToast.info({
             message: "Line is empty, enter a value",
             position: "topLeft"
@@ -41,11 +45,13 @@ async function onFormSubmit(event){
         return
     }
     try {
+        showLoadIcon()
          const data = await getImages(image, page) 
-   maxPage = Math.ceil(data.totalHits / perSize) 
+        maxPage = Math.ceil(data.totalHits / perSize) 
         refs.list.insertAdjacentHTML('beforeend', renderImages(data.hits))
         lightbox.refresh()
         checkBtnStatus()
+        hideLoadIcon()
     } catch (err) {
         console.log(err)
     }
@@ -58,9 +64,11 @@ async function onFormSubmit(event){
 async function onLoadMoreClick() {
     try {
         page += 1
+        showLoadBtn()
         const data = await getImages(image, page) 
 
         refs.list.insertAdjacentHTML('beforeend', renderImages(data.hits))
+        hiddenLoadBtn()
         lightbox.refresh()
     }catch (err) {
         console.log(err)
@@ -68,6 +76,7 @@ async function onLoadMoreClick() {
     checkBtnStatus()
 }
 
+// перевіка чи потрібно показувати кнопку
 function checkBtnStatus() {
     if (page >= maxPage) {
         hideLoadMore()
@@ -90,6 +99,21 @@ export function hideLoadMore() {
     refs.btnLoad.classList.add('hidden')
 }
 
+function showLoadIcon() {
+    refs.loadIcon.classList.remove('hidden')
+}
+
+export function hideLoadIcon() {
+    refs.loadIcon.classList.add('hidden')
+}
+
+function showLoadBtn(){
+    refs.loadIconMore.classList.remove('hidden')
+}
+
+function hiddenLoadBtn(){
+    refs.loadIconMore.classList.add('hidden')
+}
 
 export const lightbox = new SimpleLightbox('.gallery-link', { 
     captionsData: 'alt',

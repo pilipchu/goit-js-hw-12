@@ -19,16 +19,20 @@
         <button type="submit" class="btn">Search</button>
       </div>
     </form>
+    <div class="content-loader hidden">
+      <span class="loader-first"></span>
+    </div>
 
     <div class="js-image-container">
       <ul class="gallery-image"></ul>
     </div>
 
-    <div>
-      <button type="button" class="btn btn-primary hidden">Load more</button>
+    <div class="content-btn">
+      <button type="button" class="btn btn-primary hidden">
+        Load more <span class="loader hidden"></span>
+      </button>
     </div>
 
-    <div class="loader-cont"><span class="loader"></span></div>
     <script type="module" src="./main.js"></script>
   </body>
 </html>
