@@ -93,6 +93,7 @@ img {
   flex-direction: column;
   border: 1px solid #808080;
   transition: transform 250ms linear;
+  box-shadow: 10px 10px 6px 0px rgba(0, 0, 0, 0.14);
 }
 
 .gallery-item:hover {

@@ -14,6 +14,7 @@ let page = 1
 let maxPage = 0
 const perSize = 15
 
+// обєкт з доступом до елементів розмітки
 export const refs = {
     formElem: document.querySelector('form'),
     list: document.querySelector('.gallery-image'),
@@ -101,30 +102,38 @@ export function hideLoadMore() {
     refs.btnLoad.classList.add('hidden')
 }
 
+// функция показу іконки при загрузкі
 function showLoadIcon() {
     refs.loadIcon.classList.remove('hidden')
 }
 
+// функция приховування іконки загрузки
 export function hideLoadIcon() {
     refs.loadIcon.classList.add('hidden')
 }
 
+// функция показу іконки загрузки в кнопкі
 function showLoadBtn(){
     refs.loadIconMore.classList.remove('hidden')
 }
 
+// функция приховування іконки загрузки в кнопкі
 function hiddenLoadBtn(){
     refs.loadIconMore.classList.add('hidden')
 }
 
+// скрол на висоту двох вкладень
 function myScroll(){
-    const height = refs.list.firstChild.getBoundingClientRect().height;
+    const item = document.querySelector('.gallery-item')
+    const height = item.getBoundingClientRect().height;
 
     window.scrollBy({
         top: height*2,
         behavior: 'smooth',
       });
 }
+
+// слайт бар
 export const lightbox = new SimpleLightbox('.gallery-link', { 
     captionsData: 'alt',
     captionDelay: 250,
